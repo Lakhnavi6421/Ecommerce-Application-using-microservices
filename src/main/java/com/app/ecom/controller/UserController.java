@@ -1,6 +1,7 @@
 package com.app.ecom.controller;
 
-import com.app.ecom.model.User;
+import com.app.ecom.dto.UserRequest;
+import com.app.ecom.dto.UserResponse;
 import com.app.ecom.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ public class UserController {
 
     @GetMapping
 //    @RequestMapping(value = "/api/users", method = RequestMethod.GET)
-    public ResponseEntity<List<User>> getAllUsers(){
+    public ResponseEntity<List<UserResponse>> getAllUsers(){
 //        way 1:
 //        return new ResponseEntity<>(userService.fetchAllUsers());
 //        way 2:
@@ -33,7 +34,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id){
+    public ResponseEntity<UserResponse> getUserById(@PathVariable Long id){
 
         // Basic
 //        User user = userService.fetchUserById(id);
@@ -51,7 +52,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<String> updateUser(@PathVariable Long id,
-                       @RequestBody User updatedUser){
+                       @RequestBody UserRequest updatedUserRequest){
 
         // Traditional way
 //        User user = userService.updateUser(id, updatedUser);
@@ -62,7 +63,7 @@ public class UserController {
 
         // Using Java 8 feture "map"
 
-        boolean updated = userService.updateUser(id, updatedUser);
+        boolean updated = userService.updateUser(id, updatedUserRequest);
         if(updated){
             return ResponseEntity.ok("User updated successfully");
         }
@@ -70,8 +71,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createUser(@RequestBody User newUser){
-        userService.addUser(newUser);
+    public ResponseEntity<String> createUser(@RequestBody UserRequest userRequest){
+        userService.addUser(userRequest);
         return ResponseEntity.ok("User added successfully");
     }
 
