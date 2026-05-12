@@ -1,12 +1,13 @@
-package com.app.ecom;
+package com.app.ecom.controller;
 
+import com.app.ecom.model.User;
+import com.app.ecom.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -68,7 +69,7 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
-    @PostMapping    
+    @PostMapping
     public ResponseEntity<String> createUser(@RequestBody User newUser){
         userService.addUser(newUser);
         return ResponseEntity.ok("User added successfully");
